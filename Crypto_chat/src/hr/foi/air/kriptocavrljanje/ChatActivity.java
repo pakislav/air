@@ -33,6 +33,9 @@ public class ChatActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chat_layout);
 		
+		Bundle b = getIntent().getExtras();
+		String sugovornik = b.getString("key");   //dohvacanje id-a sugovornika
+		
 		chatList = (ListView) findViewById(R.id.listView_chat);
 		
 		// referenciranje Custom adaptera i njegovo postavljanje na ListView-u
@@ -40,6 +43,7 @@ public class ChatActivity extends Activity {
 		chatList.setAdapter(adapter);
 		
 		sendButton = (Button) findViewById(R.id.btn_sendMessage);
+		sendButton.setText(sugovornik);
 		
 		// dodavanje novog komentara u razgovor
 		sendButton.setOnClickListener(new OnClickListener() {

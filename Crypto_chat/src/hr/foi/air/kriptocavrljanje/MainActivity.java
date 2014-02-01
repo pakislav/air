@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 
 	}
 	
-	@Override
+	/*@Override
 	protected void onResume() {
 		super.onResume();
 		
@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
 		genId.setOnClickListener(handler);
 		chat.setOnClickListener(handler);
 		delId.setOnClickListener(handler);
-	}
+	}*/
 	
 	/**
 	 * metoda instanciranja menija
