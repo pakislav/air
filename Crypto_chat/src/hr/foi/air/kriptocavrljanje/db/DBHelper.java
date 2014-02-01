@@ -4,8 +4,16 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * klasa u kojoj se stvara baza podataka
+ * @author Tim_kmmnt
+ *
+ */
 public class DBHelper extends SQLiteOpenHelper {
 
+	/**
+	 * nazivi tablica, atributa i baze
+	 */
 	public static final String TABLE_NAME_IDS = "Identifiers";
 	public static final String TABLE_NAME_ALIASES = "Aliases";
 	public static final String COLUMN_IDS_ID = "Hash_Id";
@@ -17,12 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "crypto.db";
 	private static final int DATABASE_VERSION = 1;
 
-	// Stvaranje baze podataka
+	// upit za stvaranje tablice Identifiers
 	private static final String CREATE_TABLE_IDS = "create table "
 			+ TABLE_NAME_IDS + "(" + COLUMN_IDS_ID + " varchar(50) unique primary key, "
 			+ COLUMN_IDS_PUBLICKEY + " varchar(50) not null, " + COLUMN_IDS_PRIVATEKEY
 			+ " varchar(50) not null);";
 
+	// upit za stvaranje tablice Aliases
 	private static final String CREATE_TABLE_ALIASES = "create table "
 			+ TABLE_NAME_ALIASES + "(" + COLUMN_ALIASES_ID
 			+ " varchar(50) unique primary key, " + COLUMN_ALIASES_ALIAS + " varchar(50) not null);";
@@ -31,6 +40,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
+	/**
+	 *  metoda koja stvara tablice i bazu
+	 */
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		
@@ -43,6 +55,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		database.execSQL(CREATE_TABLE_ALIASES);
 	}
 
+	/**
+	 * metoda za ažuriranje i brisanej baze
+	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_IDS);

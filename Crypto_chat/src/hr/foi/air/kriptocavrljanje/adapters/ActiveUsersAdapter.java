@@ -19,6 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * adapter klasa koja u ListView stavlja Custom Layoute ovisno o broju aktivnih korisnika
+ * @author Tim_kmmnt
+ *
+ */
 public class ActiveUsersAdapter extends ArrayAdapter<String> {
 	
 	private TextView activeUser;
@@ -26,6 +31,9 @@ public class ActiveUsersAdapter extends ArrayAdapter<String> {
 	private List<String> activeUsersList = new ArrayList<String>();
 	private String text = "";
 	
+	/**
+	 * umetanje aktivnih korisnika u listu
+	 */
 	@Override
 	public void add(String string) {
 		activeUsersList.add(string);
@@ -36,6 +44,9 @@ public class ActiveUsersAdapter extends ArrayAdapter<String> {
 		super(context, resource);
 	}
 	
+	/**
+	 * metoda koja umeæe Custom Layouta u ListView
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
@@ -48,7 +59,10 @@ public class ActiveUsersAdapter extends ArrayAdapter<String> {
 		
 		startChat = (Button) row.findViewById(R.id.btn_chatWithuser);
 		startChat.setTag(position);
+		
+		//pokretanje razgovora sa navedenim korisnikom
 		startChat.setOnClickListener(new OnClickListener() {
+			
 			
 			@Override
 			public void onClick(View v) {
@@ -56,13 +70,14 @@ public class ActiveUsersAdapter extends ArrayAdapter<String> {
                 //remove(getItem(index));    
                 //notifyDataSetChanged();
 
-				Intent intent = new Intent(getContext(), ChatActivity.class);
+				Intent intent = new Intent(getContext(), ChatActivity.class);   // prelazak u aktivnost za razgovor
 	            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            getContext().startActivity(intent);
 				
 			}
 		});
 		
+		// postavljanje aliasa poznatim korisnicima
 		activeUser.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -72,13 +87,13 @@ public class ActiveUsersAdapter extends ArrayAdapter<String> {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 				builder.setTitle("Zamjeni s imenom:");
 
-				// Set up the input
+				// postavljanje unosa
 				final EditText input = new EditText(getContext());
-				// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+				// specificiranje tipa unosa
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
 				builder.setView(input);
 
-				// Set up the buttons
+				// postavljanje gumba
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {

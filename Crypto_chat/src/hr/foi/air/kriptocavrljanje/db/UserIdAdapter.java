@@ -10,27 +10,50 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * klasa za upravljanje upitima za bazu podataka
+ * @author Tim_kmmnt
+ *
+ */
 public class UserIdAdapter {
 
 	private SQLiteDatabase db;
 	private DBHelper dbHelper;
 
+	/**
+	 * konstruktor za inicijalizaciju baze podataka
+	 * @param context prosljeðuje trtenutni contex
+	 */
 	public UserIdAdapter(Context context) {
 		dbHelper = new DBHelper(context);
 	}
 
+	/**
+	 * otvara bazu za èitanje
+	 */
 	private void openToRead() {
 		db = dbHelper.getReadableDatabase();
 	}
 
+	/**
+	 * otvara bazu za pisanje
+	 */
 	private void openToWrite() {
 		db = dbHelper.getWritableDatabase();
 	}
 
+	/**
+	 * zatvaranje baze
+	 */
 	private void closeDB() {
 		dbHelper.close();
 	}
 
+	/**
+	 * ubacivanje identifikatora korisnika u bazu
+	 * @param userId objekt aktivnog korisnika
+	 * @return vraæa true ukoliko sve prolazi bez greške inaèe false
+	 */
 	public boolean insertUserID(UserId userId) {
 
 		boolean flag = true;
@@ -44,7 +67,7 @@ public class UserIdAdapter {
 		openToWrite();
 
 		try {
-			db.insert(DBHelper.TABLE_NAME_IDS, null, values);
+			db.insert(DBHelper.TABLE_NAME_IDS, null, values);   //upit za umetanje parametara u bazu
 			
 			/*db.execSQL("INSERT INTO " + DBHelper.TABLE_NAME_IDS
 					+ " VALUES(?,?,?)", new String[] { userId.getHashId(),
@@ -59,6 +82,10 @@ public class UserIdAdapter {
 		return flag;
 	}
 
+	/**
+	 * dohvaæanje identifikatora korisnika iz baze
+	 * @return objekt dohvaæenog korisnika
+	 */
 	public UserId getUserIdInfo() {
 
 		UserId userId = null;
@@ -67,6 +94,8 @@ public class UserIdAdapter {
 		openToRead();
 		Cursor c = db.query(DBHelper.TABLE_NAME_IDS, columns, null, null, null,
 				null, null);
+		
+		// èitanje redova iz baze podataka
 		for (c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()) {
 			String hashID = c.getString(c.getColumnIndex("Hash_Id"));
 			String publicKey = c.getString(c.getColumnIndex("Public_Key"));
@@ -84,13 +113,17 @@ public class UserIdAdapter {
 		return userId;
 	}
 
+	/**
+	 * brisanje identifikatora korisnika iz baze
+	 * @return
+	 */
 	public boolean deleteUserId() {
 
 		boolean flag = true;
 		openToWrite();
 
 		try {
-			db.delete(DBHelper.TABLE_NAME_IDS, null, null);
+			db.delete(DBHelper.TABLE_NAME_IDS, null, null);   // upit za brisanje
 		} catch (Exception e) {
 			e.printStackTrace();
 			flag = false;
@@ -100,6 +133,11 @@ public class UserIdAdapter {
 		return flag;
 	}
 
+	/**
+	 * ubacivanje aliasa korisnika u bazu
+	 * @param alias objekt alisa koji æe se ubacivati u bazu
+	 * @return  vraèa true ukoliko sve prolazi bez greške inaèe false
+	 */
 	public boolean insertUserAlias(Alias alias) {
 
 		boolean flag = true;
@@ -111,7 +149,7 @@ public class UserIdAdapter {
 		openToWrite();
 
 		try {
-			db.insert(DBHelper.TABLE_NAME_ALIASES, null, values);
+			db.insert(DBHelper.TABLE_NAME_ALIASES, null, values);   // upit za ubacivaanje aliasa u bazu
 			flag = true;
 		} catch (Exception e) {
 			flag = false;
@@ -123,6 +161,10 @@ public class UserIdAdapter {
 		return flag;
 	}
 
+	/**
+	 * dohvaæa listu svih aliasa iz baze
+	 * @return lista svih aliasa
+	 */
 	public List<Alias> getUserAlias() {
 
 		List<Alias> aliasList = new ArrayList<Alias>();
@@ -130,6 +172,8 @@ public class UserIdAdapter {
 		openToRead();
 		Cursor c = db.query(DBHelper.TABLE_NAME_ALIASES, columns, null, null,
 				null, null, null);
+		
+		// èitanje redova iz baze podataka
 		for (c.moveToFirst(); !(c.isAfterLast()); c.moveToNext()) {
 			String hashID = c.getString(c.getColumnIndex("Hash_Id"));
 			String nick = c.getString(c.getColumnIndex("Nick"));
@@ -147,14 +191,19 @@ public class UserIdAdapter {
 		return aliasList;
 	}
 
+	/**
+	 * brisanje aliasa iz baze
+	 * @param alias objekt koji se briše iz baze
+	 * @return true ako nije došlo do greške inaèe false
+	 */
 	public boolean deleteUserAlias(Alias alias) {
 
 		boolean flag = true;
 		openToWrite();
 
 		try {
-			db.delete(DBHelper.TABLE_NAME_ALIASES, DBHelper.COLUMN_ALIASES_ID
-					+ " = " + alias.getHashId(), null);
+			db.delete(DBHelper.TABLE_NAME_ALIASES, DBHelper.COLUMN_ALIASES_ID 
+					+ " = " + alias.getHashId(), null);   // upit za brisanje aliasa
 		} catch (Exception e) {
 			e.printStackTrace();
 			flag = false;

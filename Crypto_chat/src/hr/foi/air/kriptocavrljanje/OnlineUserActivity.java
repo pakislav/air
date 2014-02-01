@@ -9,29 +9,42 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Aktivnost koja prikazuje aktivne korisnike za komunikaciju
+ *  koji se dohvaæaju sa servera
+ * @author Tim_kmmnt
+ *
+ */
 public class OnlineUserActivity extends Activity {
 
 	private TextView onlineusers;
 	private ListView onlineUserslist;
 	private ActiveUsersAdapter adapter;
 
+	/**
+	 * metoda koja prikazuje aktivne korisnike i sve potrebne komponente
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.active_users_list);
 
+		// referenciranje Custom adaptera i njegovo postavljanje na ListView-u
 		adapter = new ActiveUsersAdapter(OnlineUserActivity.this,
 				R.layout.active_users_row);
 
 		onlineusers = (TextView) findViewById(R.id.txtView_onlineUsers);
 		onlineUserslist = (ListView) findViewById(R.id.listView_onlineUsersList);
 
-		onlineUserslist.setAdapter(adapter);
+		onlineUserslist.setAdapter(adapter);   // postavnjanje adaptera
 
 		getUsersfromServer();
 	}
 
+	/**
+	 * Metoda koja dohvaæa aktivne korisnike sa servera i prosljeðuje ih adpteru
+	 */
 	public void getUsersfromServer() {
 
 		// testiranje unosa aliasa

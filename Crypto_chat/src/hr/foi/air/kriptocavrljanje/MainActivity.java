@@ -17,6 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+/**
+ * Početna aktivnost za generiranje identiteta korisnika
+ * ako je identitet već generiran mogućnost odlaska u drugi aktovnost te
+ * brisanje generiranog identiteta
+ * @author Tim_kmmnt
+ * 
+ */
 public class MainActivity extends Activity {
 
 	private ProgressDialog progressBar;
@@ -25,7 +32,10 @@ public class MainActivity extends Activity {
 	private long brojac = 0;
 	Intent i;
 	UserIdAdapter userIdAdapter;
-
+	
+	/**
+	 * onCreate metoda unutar koje se generiraju potrebne fukcionalnosti
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,6 +48,7 @@ public class MainActivity extends Activity {
 		Button chat = (Button) findViewById(R.id.btn_chat);
 		Button delId = (Button) findViewById(R.id.btn_deleteId);
 
+		//izvođenje aktivnosti klikom na gumbove		 		 
 		View.OnClickListener handler = new View.OnClickListener() {
 
 			@Override
@@ -49,12 +60,13 @@ public class MainActivity extends Activity {
 					runProgressBar(v);
 					break;
 				case R.id.btn_chat:
+					//prelazak u drugu aktivnost
 					i = new Intent(getApplicationContext(),
 							OnlineUserActivity.class);
 					startActivity(i);
 					break;
 				case R.id.btn_deleteId:
-					deleteId();
+					deleteId();   //brisanje generiranog identiteta  
 					break;
 				}
 			}
@@ -65,13 +77,20 @@ public class MainActivity extends Activity {
 		delId.setOnClickListener(handler);
 
 	}
-
+	
+	/**
+	 * metoda instanciranja menija
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.chat, menu);
 		return true;
 	}
-
+	
+	/**
+	 * metoda unutar koje se generira identitet, upisuje u bazu podataka i prikazuje napredak u izvršavanju
+	 * @param v id komponente koja je kliknuta tj. gumba generira identitet
+	 */
 	public void runProgressBar(View v) {
 		progressBar = new ProgressDialog(v.getContext());
 		progressBar.setCancelable(true);
@@ -85,6 +104,7 @@ public class MainActivity extends Activity {
 
 		brojac = 0;
 
+		//pokretanje dretve
 		new Thread(new Runnable() {
 
 			@Override
@@ -138,7 +158,10 @@ public class MainActivity extends Activity {
 		}).start();
 	}
 
-	// simulator generatora kljuceva
+	/**
+	 *  metoda generiranja ključeva 
+	 * @return vraća broj 100 nakone generiranja ključeva
+	 */
 	public int generateKeys() {
 
 		UserId userId = new UserId();
@@ -167,7 +190,10 @@ public class MainActivity extends Activity {
 		return 100;
 	}
 
-	// generiranje hash identiteta
+	/**
+	 *  generiranje hash identiteta
+	 * @return hash identitet
+	 */
 	public String getHash() {
 
 		MessageDigest md = null;
@@ -195,6 +221,9 @@ public class MainActivity extends Activity {
 		return sb.toString();
 	}
 
+	/**
+	 * metoda brisanja identiteta iz baze
+	 */
 	public void deleteId() {
 		
 		if(userIdAdapter.deleteUserId()) {

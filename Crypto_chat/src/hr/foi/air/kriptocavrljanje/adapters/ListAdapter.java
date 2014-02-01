@@ -14,12 +14,20 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * klasa adapter koja ilustrira naèin razgovora
+ * @author Tim_kmmnt
+ *
+ */
 public class ListAdapter extends ArrayAdapter<Comment> {
 
 	private TextView comment;
 	private LinearLayout wrapper;
 	private List<Comment> list = new ArrayList<Comment>();
 	
+	/**
+	 * umetanje zadanih komentara u listu
+	 */
 	@Override
 	public void add(Comment comment) {
 		list.add(comment);
@@ -30,6 +38,9 @@ public class ListAdapter extends ArrayAdapter<Comment> {
 		super(context, resource);
 	}
 	
+	/**
+	 * umetanje custom layouta u listu koji simuliraju razgovor
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		

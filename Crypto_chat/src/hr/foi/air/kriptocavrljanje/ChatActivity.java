@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/**
+ * Aktivnost koja prikazuje razgovor između sugovornika
+ * @author Tim_kmmnt
+ *
+ */
 public class ChatActivity extends Activity {
 	
 	private ListView chatList;
@@ -20,6 +25,9 @@ public class ChatActivity extends Activity {
 	private EditText sendMessage;
 	private Button sendButton;
 
+	/**
+	 * onCreate metoda koja prikazuje komunikaciju
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +40,8 @@ public class ChatActivity extends Activity {
 		chatList.setAdapter(adapter);
 		
 		sendButton = (Button) findViewById(R.id.btn_sendMessage);
+		
+		// dodavanje novog komentara u razgovor
 		sendButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -49,7 +59,7 @@ public class ChatActivity extends Activity {
 			
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// Izvršavanje koda u slu�?aju klika na Enter
+				// Izvršavanje koda u slučaju klika na Enter
 				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
 					adapter.add(new Comment(sendMessage.getText().toString(), false));
 					sendMessage.setText("");
@@ -62,7 +72,9 @@ public class ChatActivity extends Activity {
 		addItems();
 	}
 	
-	// dodavanje proizvoljnih vrijednosti radi efekta
+	/**
+	 *  metoda koja dodaje komentare na adekvatnu stranu lisview liste ovisno od koje osobe je poslana
+	 */
 	private void addItems() {
 		adapter.add(new Comment("Hey kaj ima?", true));
 		adapter.add(new Comment("Ej! Ništa previše.", false));
