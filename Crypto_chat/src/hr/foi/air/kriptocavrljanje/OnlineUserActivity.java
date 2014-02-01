@@ -6,6 +6,9 @@ import hr.foi.air.kriptocavrljanje.core.Alias;
 import hr.foi.air.kriptocavrljanje.db.UserIdAdapter;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +44,35 @@ public class OnlineUserActivity extends Activity {
 
 		getUsersfromServer();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		setContentView(R.layout.active_users_list);
+
+		// referenciranje Custom adaptera i njegovo postavljanje na ListView-u
+		adapter = new ActiveUsersAdapter(OnlineUserActivity.this,
+				R.layout.active_users_row);
+
+		onlineusers = (TextView) findViewById(R.id.txtView_onlineUsers);
+		onlineUserslist = (ListView) findViewById(R.id.listView_onlineUsersList);
+
+		onlineUserslist.setAdapter(adapter);   // postavnjanje adaptera
+		
+		onlineUserslist.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				
+				
+				
+			}
+		});
+
+		getUsersfromServer();
+	}
 
 	/**
 	 * Metoda koja dohvaæa aktivne korisnike sa servera i prosljeðuje ih adpteru
@@ -62,6 +94,7 @@ public class OnlineUserActivity extends Activity {
 		if (userIdAdapter.getUserIdInfo() != null) {
 			adapter.add(userIdAdapter.getUserIdInfo().getHashId());
 		}
+		
 	}
 	
 	

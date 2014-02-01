@@ -84,8 +84,9 @@ public class ActiveUsersAdapter extends ArrayAdapter<String> {
 			public void onClick(View v) {
 				//Integer index = (Integer) v.getTag();
 				
+				
 				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-				builder.setTitle("Zamjeni s imenom:");
+				builder.setTitle("Postavljanje aliasa:");
 
 				// postavljanje unosa
 				final EditText input = new EditText(getContext());

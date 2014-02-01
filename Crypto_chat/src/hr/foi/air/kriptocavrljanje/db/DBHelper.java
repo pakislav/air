@@ -27,14 +27,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	// upit za stvaranje tablice Identifiers
 	private static final String CREATE_TABLE_IDS = "create table "
-			+ TABLE_NAME_IDS + "(" + COLUMN_IDS_ID + " varchar(50) unique primary key, "
-			+ COLUMN_IDS_PUBLICKEY + " varchar(50) not null, " + COLUMN_IDS_PRIVATEKEY
-			+ " varchar(50) not null);";
+			+ TABLE_NAME_IDS + "(" + COLUMN_IDS_ID + " text not null, "
+			+ COLUMN_IDS_PUBLICKEY + " text not null, " + COLUMN_IDS_PRIVATEKEY
+			+ " text not null);";
 
 	// upit za stvaranje tablice Aliases
 	private static final String CREATE_TABLE_ALIASES = "create table "
 			+ TABLE_NAME_ALIASES + "(" + COLUMN_ALIASES_ID
-			+ " varchar(50) unique primary key, " + COLUMN_ALIASES_ALIAS + " varchar(50) not null);";
+			+ " text not null, " + COLUMN_ALIASES_ALIAS + " text not null);";
 
 	public DBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
