@@ -77,6 +77,8 @@ public class OnlineUserActivity extends Activity {
 	 */
 	public void sendMessagetoServer() {
 		
+		// test git
+		
 	}
 	
 }
