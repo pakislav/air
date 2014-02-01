@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="hr.foi.air.kriptocavrljanje.ChatActivity" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/ChatActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="137" x="218" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="hr.foi.air.kriptocavrljanje.GenerateIDActivity" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/GenerateIDActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="172" x="395" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="hr.foi.air.kriptocavrljanje.MainActivity" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/MainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="208" x="607" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="hr.foi.air.kriptocavrljanje.RoomActivity" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/RoomActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="134" x="44" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="hr.foi.air.kriptocavrljanje.adapters.ListAdapter" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/adapters/ListAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="202" x="286" y="356"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="hr.foi.air.kriptocavrljanje.adapters.RoomListAdapter" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/adapters/RoomListAdapter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="171" width="202" x="44" y="356"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="hr.foi.air.kriptocavrljanje.core.Comment" project="Crypto_chat" 
+    file="/Crypto_chat/src/hr/foi/air/kriptocavrljanje/core/Comment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="709" y="432"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="8">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="9" name="adapter"/>      
+      <multiplicity id="10" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="11">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="12" name="list"/>      
+      <multiplicity id="13" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="14">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="15" name="adapter"/>      
+      <multiplicity id="16" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

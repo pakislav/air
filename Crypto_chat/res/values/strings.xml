@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">KriptoČavrljanje</string>
+    <string name="action_settings">Settings</string>
+    <string name="add">Dodaj</string>
+    <string name="hello">Bok!</string>
+    <string name="hint">Ovdje piši....</string>
+    <string name="roomhint">Naziv sobe....</string>
+    <string name="btn_send">Pošalji</string>
+    <string name="txtview_emptyList">Ne odvija se razgovor</string>
+    <string name="genId">Generiraj identitet</string>
+    <string name="rooms">Odaberi sobe</string>
+    <string name="chat">Čavrljanje</string>
+    <string name="deleteId">Obriši identitet</string>
+    <string name="deleteHistory">Obriši povijest razgovora</string>
+    <string name="generateKey">Generiraj ključ</string>
+    <string name="txtview_hash">Vaš identitet je:</string>
+    <string name="roomName">Soba</string>
+    <string name="txtEmpty">Lista je prazna!</string>
+    <string name="deleteRoom">Obriši</string>
+    <string name="myRoomList">Sobe u koje ste učlanjeni:</string>
+    <string name="onlineUsers">Online korisnici:</string>
+    <string name="chatWithUser">Čavrljaj</string>
+    <string name="txtView_activeUsers">Aktivan</string>
+
+</resources>
