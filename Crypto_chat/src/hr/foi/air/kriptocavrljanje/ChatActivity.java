@@ -55,7 +55,7 @@ public class ChatActivity extends Activity {
 	UserIdAdapter userIdAdapter;
 	public static Inet4Address sugovornikIp = null;
 	public static int sugorovnikPort = 9001;
-
+	public static String zadnja= "bbb" ;
 	/**
 	 * onCreate metoda koja prikazuje komunikaciju
 	 */
@@ -312,29 +312,31 @@ public class ChatActivity extends Activity {
 
 			DatagramSocket s = null; // listener
 			
-			public ChatHelperThread(){
+		/*	public ChatHelperThread(){
 				try {
-					InetAddress host = Inet4Address.getByName("192.168.5.101");
-					s = new DatagramSocket(9001, host);
+					//InetAddress host = Inet4Address.getByName("192.168.5.101");
+					//s = new DatagramSocket(9001);
 
 				} catch (SocketException e) {
 					e.printStackTrace();
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}	
 			}
-			
+			*/
 			@Override
 			public void run() {
-				
+				try {
+					s = new DatagramSocket(9001);
+				} catch (SocketException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				while(true){ // glavni radnik
 					try{
-						byte[] in = new byte[100];
+						byte[] in = new byte[40000];
 						
 						DatagramPacket p = new DatagramPacket(in, in.length);
 						s.receive(p); // blokira thread dok se klijent ne spoji 
-						Thread.sleep(10000);
+						//Thread.sleep(10000);
 					/*	Paket pp = new Paket();
 						pp.deserijaliziraj(in);*/
 						Log.d("p", "primili poruku");
@@ -346,7 +348,7 @@ public class ChatActivity extends Activity {
 			}
 		}
 		
-		//new ChatHelperThread().start();
+		new ChatHelperThread().start();
 		// zavr�etak servera
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -369,6 +371,7 @@ public class ChatActivity extends Activity {
 				if (!sendMessage.getText().toString().isEmpty()) {
 					adapter.add(new Comment(sendMessage.getText().toString(),
 							false));
+					zadnja = sendMessage.getText().toString();
 					//////////////////////////////////////////////////////////////////////////////
 					
 						
@@ -508,19 +511,18 @@ public class ChatActivity extends Activity {
 							public void run() {
 								// TODO Auto-generated method stub
 								try {
-									DatagramSocket s = new DatagramSocket(9007);
-									/*
-									Paket p = new Paket(hash, sugovornik, "lidija bacic");
+									DatagramSocket s = new DatagramSocket();
+									
+									Paket p = new Paket(hash, sugovornik, zadnja);
 									byte[] pporuka = p.serijaliziraj();
-									*/
-									byte[] pporuka = new byte [2];
-									pporuka[0] = 23;
-									pporuka[1] = 24;
+									
+									//byte[] pporuka = new byte [2];
+									//pporuka[0] = 23;
+									//pporuka[1] = 24;
 									DatagramPacket poruka = new DatagramPacket(pporuka, pporuka.length, Inet4Address.getByName("255.255.255.255"), 9001);
 									
-									Log.d("--salji-------->", "saljem");
 									s.send(poruka);
-									Log.d("------------------->", "saljem");
+
 									/*
 									DatagramPacket odgovor = new DatagramPacket(in, in.length);
 									s.receive(odgovor);
