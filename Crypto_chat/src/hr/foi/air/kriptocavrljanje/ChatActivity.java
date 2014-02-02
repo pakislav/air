@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -21,9 +22,11 @@ import org.json.JSONObject;
 
 import hr.foi.air.crypto_chat.R;
 import hr.foi.air.kriptocavrljanje.adapters.ListAdapter;
+import hr.foi.air.kriptocavrljanje.core.Chathelper;
 import hr.foi.air.kriptocavrljanje.core.Comment;
 import hr.foi.air.kriptocavrljanje.core.UserId;
 import hr.foi.air.kriptocavrljanje.db.UserIdAdapter;
+import android.R.string;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,7 +47,7 @@ import android.widget.ListView;
 public class ChatActivity extends Activity {
 
 	private ListView chatList;
-	private ListAdapter adapter;
+	public static ListAdapter adapter;
 	private EditText sendMessage;
 	private Button sendButton;
 
@@ -56,6 +59,10 @@ public class ChatActivity extends Activity {
 	public static Inet4Address sugovornikIp = null;
 	public static int sugorovnikPort = 9001;
 	public static String zadnja= "bbb" ;
+	public static Thread radnik = null;
+	
+	public static DatagramSocket s = null;
+	
 	/**
 	 * onCreate metoda koja prikazuje komunikaciju
 	 */
@@ -310,7 +317,7 @@ public class ChatActivity extends Activity {
 			public final static int PORT = 9001;
 			
 
-			DatagramSocket s = null; // listener
+			
 			
 		/*	public ChatHelperThread(){
 				try {
@@ -324,31 +331,58 @@ public class ChatActivity extends Activity {
 			*/
 			@Override
 			public void run() {
-				try {
-					s = new DatagramSocket(9001);
-				} catch (SocketException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				Log.d("server dignut", "delam");
+				//DatagramSocket s = null; // listener
+				
+				
 				while(true){ // glavni radnik
-					try{
-						byte[] in = new byte[40000];
+					byte[] in = new byte[40000];
+					try {
 						
-						DatagramPacket p = new DatagramPacket(in, in.length);
-						s.receive(p); // blokira thread dok se klijent ne spoji 
-						//Thread.sleep(10000);
-					/*	Paket pp = new Paket();
-						pp.deserijaliziraj(in);*/
-						Log.d("p", "primili poruku");
+						s = new DatagramSocket(9001);
+					} catch (SocketException e2) {
+						// TODO Auto-generated catch block
+						Log.d("server", "ne mogu bindati");
+						if(!s.isClosed()){							
+							s.close();
+						}
+						s = null;
+						System.gc();
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							Log.d("server", "netko me prekinuo u snu");
+							break;
+						}
+						continue;
 					}
-					catch(Exception e){
-						e.printStackTrace();
-					}
+					DatagramPacket p = new DatagramPacket(in, in.length);
+					//if (p == null){ Log.d("p", "je nula"); }
+					try {
+						if(s.isClosed()){							
+							break;
+						}
+						s.receive(p);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						s.close();
+						continue;
+					} // blokira thread dok se klijent ne spoji 
+
+					Paket pp = new Paket();
+					//if (pp == null){ Log.d("pp", "je nula"); }
+					pp.deserijaliziraj(in);
+					s.close();
+					Log.d("p", pp.getPoruka());
+					//adapter.add(new Comment(pp.getPoruka(), false));
 				}
 			}
 		}
 		
-		new ChatHelperThread().start();
+	radnik=	new ChatHelperThread();
+	radnik.start();
 		// zavr�etak servera
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -552,6 +586,7 @@ public class ChatActivity extends Activity {
 		sendMessage = (EditText) findViewById(R.id.editTxt_message);
 		sendMessage.setOnKeyListener(new OnKeyListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				// Izvršavanje koda u slučaju klika na Enter
@@ -562,6 +597,17 @@ public class ChatActivity extends Activity {
 					sendMessage.setText("");
 					return true;
 				}
+				if ( keyCode == KeyEvent.KEYCODE_BACK) {
+					
+					if (radnik.isAlive()) {
+						radnik.interrupt();
+						if (!s.isClosed()){						
+						s.close();
+						}
+					}
+					Log.d("backbutton", "back radi");
+				}
+				
 				return false;
 			}
 		});
