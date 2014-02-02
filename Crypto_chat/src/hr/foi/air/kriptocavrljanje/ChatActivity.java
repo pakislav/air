@@ -314,8 +314,8 @@ public class ChatActivity extends Activity {
 			
 			public ChatHelperThread(){
 				try {
-					InetAddress host = Inet4Address.getByName(ip);
-					s = new DatagramSocket(PORT, host);
+					InetAddress host = Inet4Address.getByName("192.168.5.101");
+					s = new DatagramSocket(9001, host);
 
 				} catch (SocketException e) {
 					e.printStackTrace();
@@ -330,13 +330,14 @@ public class ChatActivity extends Activity {
 				
 				while(true){ // glavni radnik
 					try{
-						byte[] in = new byte[IN_BUF_LEN];
+						byte[] in = new byte[100];
 						
 						DatagramPacket p = new DatagramPacket(in, in.length);
-						s.receive(p); // blokira thread dok se klijent ne spoji
-						Paket pp = new Paket();
-						pp.deserijaliziraj(in);
-						Log.d(pp.getPoruka(), "primili poruku");
+						s.receive(p); // blokira thread dok se klijent ne spoji 
+						Thread.sleep(10000);
+					/*	Paket pp = new Paket();
+						pp.deserijaliziraj(in);*/
+						Log.d("p", "primili poruku");
 					}
 					catch(Exception e){
 						e.printStackTrace();
@@ -345,7 +346,7 @@ public class ChatActivity extends Activity {
 			}
 		}
 		
-		new ChatHelperThread().start();
+		//new ChatHelperThread().start();
 		// zavr�etak servera
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -376,6 +377,7 @@ public class ChatActivity extends Activity {
 						 * @author student
 						 *
 						 */
+					
 						class Paket{ // predstavlja strukturu svakog paketa naseg protokola
 							// fiksnih 20 + 20 + 4 okteta
 							private String mSalje = null; // SHA1(javni kljuc) hex onoga tko salje poruku ili 20 nula
@@ -500,31 +502,45 @@ public class ChatActivity extends Activity {
 					
 						final int IN_BUF_LEN = Paket.PAKET_LEN_MAX;
 
-						
-						try {
-							DatagramSocket s = new DatagramSocket(9002, Inet4Address.getByName(ip));
-							Paket p = new Paket(hash, sugovornik, "lidija bacic");
-							byte[] pporuka = p.serijaliziraj();
-							Log.d("-aaa-------->", ip.toLowerCase());
-							DatagramPacket poruka = new DatagramPacket(pporuka, pporuka.length, sugovornikIp, sugorovnikPort);
-							
-							Log.d("--salji-------->", ip);
-							s.send(poruka);
-							Log.d("------------------->", "saljem");
-							/*
-							DatagramPacket odgovor = new DatagramPacket(in, in.length);
-							s.receive(odgovor);
-							Paket podgovor = new Paket();
-							podgovor.deserijaliziraj(in);
-							System.out.println(podgovor.mPoruka);
-							*/
+						Thread t = new Thread(new Runnable() {
 
-						} catch (Exception e) {
-							e.printStackTrace();
-							Log.d("-------11111111111------------>", "saljem");
-						}
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								try {
+									DatagramSocket s = new DatagramSocket(9007);
+									/*
+									Paket p = new Paket(hash, sugovornik, "lidija bacic");
+									byte[] pporuka = p.serijaliziraj();
+									*/
+									byte[] pporuka = new byte [2];
+									pporuka[0] = 23;
+									pporuka[1] = 24;
+									DatagramPacket poruka = new DatagramPacket(pporuka, pporuka.length, Inet4Address.getByName("255.255.255.255"), 9001);
+									
+									Log.d("--salji-------->", "saljem");
+									s.send(poruka);
+									Log.d("------------------->", "saljem");
+									/*
+									DatagramPacket odgovor = new DatagramPacket(in, in.length);
+									s.receive(odgovor);
+									Paket podgovor = new Paket();
+									podgovor.deserijaliziraj(in);
+									System.out.println(podgovor.mPoruka);
+									*/
+
+								} catch (Exception e) {
+									e.printStackTrace();
+									Log.d("-------11111111111------------>", "saljem");
+								}
+								
+							}
+							
+						});
+
+						t.start();
 						///////////////////////////////////////////////////
-				
+						
 				
 				sendMessage.setText("");
 				}
