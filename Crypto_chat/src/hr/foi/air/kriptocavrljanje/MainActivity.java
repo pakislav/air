@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -156,6 +157,7 @@ public class MainActivity extends Activity {
 	 * @param v id komponente koja je kliknuta tj. gumba generira identitet
 	 */
 	public void runProgressBar(View v) {
+		/*
 		progressBar = new ProgressDialog(v.getContext());
 		progressBar.setCancelable(true);
 		progressBar.setMessage("Generiranje kljuca...");
@@ -220,6 +222,20 @@ public class MainActivity extends Activity {
 
 			}
 		}).start();
+		*/
+		progressBarHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				generateKeys();
+				Toast.makeText(getApplicationContext(),
+						"Uspješno je generiran Vaš ključ!",
+						Toast.LENGTH_SHORT).show();
+				i = new Intent(getApplicationContext(),
+						OnlineUserActivity.class);
+				startActivity(i);
+			}
+		});
+		
 	}
 
 	/**
@@ -242,6 +258,7 @@ public class MainActivity extends Activity {
 		}
 		
 		AsymmetricCipherKeyPair parKljuceva = generator.generateKeyPair();
+		
 		RSAPrivateCrtKeyParameters privatniKljuc = (RSAPrivateCrtKeyParameters)parKljuceva.getPrivate();
 		RSAKeyParameters javniKljuc = (RSAKeyParameters)parKljuceva.getPublic();
 
@@ -261,6 +278,7 @@ public class MainActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 		}
 		
+		/*
 		while (brojac <= 1000000) {
 
 			brojac++;
@@ -274,6 +292,7 @@ public class MainActivity extends Activity {
 			}
 
 		}
+		*/
 
 		return 100;
 	}
@@ -304,6 +323,7 @@ public class MainActivity extends Activity {
 			sb.append(Integer.toHexString(b & 0xff));
 		}
 
+		//Log.d(sb.toString(), "aaaaaaaaaaaaaaa");
 		return sb.toString();
 	}
 
